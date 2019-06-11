@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const { body } = require("express-validator/check");
 const lectureController = require("../controllers/lecture");
+const checkValidation = require("../util/validation");
 
 router.get("/", lectureController.getLectures);
 
@@ -16,6 +17,7 @@ router.post(
       .trim()
       .isNumeric()
   ],
+  checkValidation,
   lectureController.createLecture
 );
 

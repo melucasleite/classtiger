@@ -1,6 +1,5 @@
 const Lecture = require("../models/lecture");
 const Student = require("../models/student");
-const { validationResult } = require("express-validator/check");
 
 exports.getLectures = async (req, res, next) => {
   try {
@@ -18,13 +17,6 @@ exports.getLectures = async (req, res, next) => {
 };
 
 exports.createLecture = async (req, res, next) => {
-  const errors = validationResult(req);
-  if (!errors.isEmpty()) {
-    const error = new Error("Validation failed, entered data is incorrect.");
-    error.statusCode = 422;
-    error.data = errors.array();
-    return next(error);
-  }
   const title = req.body.title;
   const dayOfWeek = req.body.dayOfWeek;
   const start = req.body.start;

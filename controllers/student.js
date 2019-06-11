@@ -1,4 +1,3 @@
-const { validationResult } = require("express-validator/check");
 const Student = require("../models/student");
 
 exports.getStudents = async (req, res, next) => {
@@ -14,13 +13,6 @@ exports.getStudents = async (req, res, next) => {
 };
 
 exports.createStudent = async (req, res, next) => {
-  const errors = validationResult(req);
-  if (!errors.isEmpty()) {
-    const error = new Error("Validation failed, entered data is incorrect.");
-    error.statusCode = 422;
-    error.data = errors.array();
-    return next(error);
-  }
   const { name, email, cellphone } = req.body;
   try {
     const studentExists = await Student.findOne({
@@ -64,14 +56,7 @@ exports.createStudent = async (req, res, next) => {
 };
 
 exports.updateStudent = async (req, res, next) => {
-  studentId = req.params.studentId;
-  const errors = validationResult(req);
-  if (!errors.isEmpty()) {
-    const error = new Error("Validation failed, entered data is incorrect.");
-    error.statusCode = 422;
-    error.data = errors.array();
-    return next(error);
-  }
+  const studentId = req.params.studentId;
   const { name, email, cellphone, notes } = req.body;
 
   try {
@@ -93,7 +78,7 @@ exports.updateStudent = async (req, res, next) => {
 };
 
 exports.deleteStudent = async (req, res, next) => {
-  studentId = req.params.studentId;
+  const studentId = req.params.studentId;
   try {
     const student = await Student.findById(studentId);
     if (!student) {

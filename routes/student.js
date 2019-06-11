@@ -1,7 +1,7 @@
-var express = require("express");
+const express = require("express");
 const { body } = require("express-validator/check");
-var router = express.Router();
-
+const router = express.Router();
+const checkValidation = require("../util/validation");
 const studentController = require("../controllers/student");
 
 router.get("/", studentController.getStudents);
@@ -20,6 +20,7 @@ router.post(
       .trim()
       .isLength({ min: 5 })
   ],
+  checkValidation,
   studentController.createStudent
 );
 
@@ -38,6 +39,7 @@ router.put(
       .trim()
       .isLength({ min: 5 })
   ],
+  checkValidation,
   studentController.updateStudent
 );
 
