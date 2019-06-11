@@ -1,7 +1,7 @@
 require("dotenv").config();
 const express = require("express");
 const mongoose = require("mongoose");
-
+const PORT = process.env.PORT || 8080;
 const studentRoutes = require("./routes/student");
 const lectureRoutes = require("./routes/lecture");
 
@@ -32,6 +32,6 @@ app.use((error, req, res, next) => {
 mongoose
   .connect(process.env.MONGODB_URI)
   .then(result => {
-    app.listen(8080);
+    app.listen(PORT);
   })
   .catch(err => console.log(err));
