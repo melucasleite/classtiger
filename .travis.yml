@@ -7,5 +7,5 @@ cache:
 install:
   - yarn install
 script:
-  - istanbul cover mocha --reporter test -- -R spec
+  - istanbul cover ./node_modules/mocha/bin/_mocha --reporter test -- -R spec
   - codecov
