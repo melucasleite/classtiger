@@ -2,12 +2,14 @@ const express = require("express");
 const router = express.Router();
 const { body } = require("express-validator/check");
 const lectureController = require("../controllers/lecture");
-const checkValidation = require("../util/validation");
+const checkValidation = require("../middleware/validation");
+const isAuth = require("../middleware/is-auth");
 
-router.get("/", lectureController.getLectures);
+router.get("/", isAuth, lectureController.getLectures);
 
 router.post(
   "/",
+  isAuth,
   [
     body("title").trim(),
     body("dayOfWeek").isNumeric(),
@@ -23,11 +25,13 @@ router.post(
 
 router.put(
   "/:lectureId/students/:studentId",
+  isAuth,
   lectureController.addLectureStudent
 );
 
 router.delete(
   "/:lectureId/students/:studentId",
+  isAuth,
   lectureController.removeLectureStudent
 );
 

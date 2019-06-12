@@ -3,6 +3,10 @@ const Schema = mongoose.Schema;
 
 const studentSchema = new Schema(
   {
+    _author: {
+      type: Schema.Types.ObjectId,
+      ref: "User"
+    },
     name: {
       type: String
     },

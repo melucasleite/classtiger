@@ -4,6 +4,7 @@ const mongoose = require("mongoose");
 const PORT = process.env.PORT || 8080;
 const studentRoutes = require("./routes/student");
 const lectureRoutes = require("./routes/lecture");
+const authRoutes = require("./routes/auth");
 
 const app = express();
 
@@ -21,6 +22,7 @@ app.use((req, res, next) => {
 
 app.use("/students", studentRoutes);
 app.use("/lectures", lectureRoutes);
+app.use("/auth", authRoutes);
 
 app.use((error, req, res, next) => {
   const status = error.statusCode || 500;
