@@ -1,8 +1,12 @@
 const Student = require("../models/student");
 
 exports.getStudents = async (req, res, next) => {
+  const userId = req.userId;
   try {
-    const students = await Student.find({ deletedAt: null });
+    const students = await Student.find({
+      deletedAt: null,
+      _author: userId
+    });
     res.status(200).json({
       message: "",
       students: students
@@ -14,6 +18,7 @@ exports.getStudents = async (req, res, next) => {
 
 exports.createStudent = async (req, res, next) => {
   const { name, email, cellphone } = req.body;
+  const userId = req.userId;
   try {
     const studentExists = await Student.findOne({
       email: email
@@ -36,6 +41,7 @@ exports.createStudent = async (req, res, next) => {
       await studentExists.save();
     } else {
       const student = new Student({
+        _author: userId,
         name: name,
         email: email,
         cellphone: cellphone,
@@ -57,10 +63,10 @@ exports.createStudent = async (req, res, next) => {
 
 exports.updateStudent = async (req, res, next) => {
   const studentId = req.params.studentId;
+  const userId = req.userId;
   const { name, email, cellphone, notes } = req.body;
-
   try {
-    const student = await Student.findById(studentId);
+    const student = await Student.findOne({ _id: studentId, _author: userId });
     if (!student) {
       const error = new Error("Student not found.");
       error.statusCode = 404;
@@ -80,7 +86,7 @@ exports.updateStudent = async (req, res, next) => {
 exports.deleteStudent = async (req, res, next) => {
   const studentId = req.params.studentId;
   try {
-    const student = await Student.findById(studentId);
+    const student = await Student.findOne({ _id: studentId, _author: userId });
     if (!student) {
       const error = new Error("Student not found.");
       error.statusCode = 404;
