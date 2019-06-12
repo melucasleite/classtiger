@@ -29,13 +29,11 @@ exports.createStudent = async (req, res, next) => {
         await studentExists.save();
         res.status(200).json({
           message:
-            "Found a deleted student with this e-mail. Just undeleted it.",
-          student: studentExists
+            "Found a deleted student with this e-mail. Just undeleted it."
         });
       } else {
         res.status(422).json({
-          message: "A student already exists with this e-mail.",
-          student: studentExists
+          message: "A student already exists with this e-mail."
         });
       }
       await studentExists.save();
