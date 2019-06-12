@@ -1,6 +1,7 @@
 const router = require("express").Router();
 const authController = require("../controllers/auth");
 const { body } = require("express-validator/check");
+const checkValidation = require("../middleware/validation");
 
 router.post(
   "/",
@@ -16,6 +17,7 @@ router.post(
       .trim()
       .isLength({ min: 8, max: 180 })
   ],
+  checkValidation,
   authController.signup
 );
 
@@ -30,6 +32,7 @@ router.post(
       .trim()
       .isLength({ min: 8, max: 180 })
   ],
+  checkValidation,
   authController.login
 );
 
