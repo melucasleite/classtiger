@@ -31,12 +31,16 @@ app.use((error, req, res, next) => {
   res.status(status).json({ message: message, data: data });
 });
 
-mongoose
-  .connect(process.env.MONGODB_URI, {
-    useCreateIndex: true,
-    useNewUrlParser: true
-  })
-  .then(result => {
-    app.listen(PORT);
-  })
-  .catch(err => console.log(err));
+async function start() {
+  try {
+    await mongoose.connect(process.env.MONGODB_URI, {
+      useCreateIndex: true,
+      useNewUrlParser: true
+    });
+    await app.listen(PORT);
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+start();
