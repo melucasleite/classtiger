@@ -17,6 +17,7 @@ function isAuth(req, res, next) {
     const error = new Error("Not Authenticated.");
     error.statusCode = 401;
     next(error);
+    throw error;
   }
 }
 
