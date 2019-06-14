@@ -8,15 +8,16 @@ function isAuth(req, res, next) {
     throw error;
   }
   const token = authHeader.split(" ")[1];
-  const decodedToken = jwt.verify(token, APP_SECRET);
-  if (!decodedToken) {
+  try {
+    const decodedToken = jwt.verify(token, APP_SECRET);
+    req.userId = decodedToken.userId;
+    next();
+    return decodedToken;
+  } catch {
     const error = new Error("Not Authenticated.");
     error.statusCode = 401;
-    throw error;
+    next(error);
   }
-  req.userId = decodedToken.userId;
-  next();
-  return decodedToken;
 }
 
 module.exports = isAuth;
