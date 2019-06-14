@@ -6,12 +6,12 @@ const APP_SECRET = process.env.APP_SECRET || "not_a_secret";
 exports.signup = async (req, res, next) => {
   const { name, email, password } = req.body;
   const userExists = await User.findOne({ email: email });
-  if (userExists) {
-    res.status(422).json({
-      message: "There is already an user for this e-mail"
-    });
-  }
   try {
+    if (userExists) {
+      const error = new Error("There is already an user for this e-mail.");
+      error.statusCode = 422;
+      throw error;
+    }
     const hashedPassword = await bcrypt.hash(password, 12);
     const user = new User({
       name: name,
