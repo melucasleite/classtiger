@@ -8,7 +8,7 @@ const isAuth = require("../middleware/is-auth");
 const sinon = require("sinon");
 const jwt = require("jsonwebtoken");
 
-describe("Authorization Middleware", function() {
+describe("Authorization Middleware - isAuth", function() {
   it("Should have set the APP_SECRET env_var", function() {
     const APP_SECRET = process.env.APP_SECRET;
     expect(APP_SECRET).to.not.be.undefined;
