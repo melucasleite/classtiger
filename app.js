@@ -1,6 +1,7 @@
 require("dotenv").config();
 const express = require("express");
 const mongoose = require("mongoose");
+var logger = require('morgan');
 const PORT = process.env.PORT || 8080;
 const studentRoutes = require("./routes/student");
 const lectureRoutes = require("./routes/lecture");
@@ -8,6 +9,7 @@ const authRoutes = require("./routes/auth");
 
 const app = express();
 
+app.use(logger('dev'));
 app.use(express.json());
 
 app.use((req, res, next) => {
