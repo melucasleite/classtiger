@@ -13,7 +13,7 @@ function isAuth(req, res, next) {
     req.userId = decodedToken.userId;
     next();
     return decodedToken;
-  } catch {
+  } catch (err) {
     const error = new Error("Not Authenticated.");
     error.statusCode = 401;
     next(error);
